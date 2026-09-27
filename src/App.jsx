@@ -2,9 +2,9 @@ import { useState } from 'react';
 import './App.css';
 
 import Button from './components/Button/Button';
-import Checkbox from './components/Checkbox/Checkbox';
 import Input from './components/Input/Input';
 import Text from './components/Text/Text';
+import TodoItem from './components/TodoItem/TodoItem';
 
 function App() {
   const [todos, setTodos] = useState([
@@ -20,11 +20,13 @@ function App() {
   const [editingText, setEditingText] = useState('');
 
   const handleAddTodo = () => {
-    if (!inputText.trim()) return;
+    const trimmedText = inputText.trim();
+
+    if (!trimmedText) return;
 
     const newTodo = {
       id: Date.now(),
-      text: inputText,
+      text: trimmedText,
       completed: false,
     };
 
@@ -33,6 +35,8 @@ function App() {
   };
 
   const handleKeyDown = (e) => {
+    if (e.nativeEvent.isComposing) return;
+
     if (e.key === 'Enter') {
       handleAddTodo();
     }
@@ -54,9 +58,11 @@ function App() {
   };
 
   const handleSaveEdit = (id) => {
-    if (!editingText.trim()) return;
+    const trimmedText = editingText.trim();
 
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, text: editingText } : todo)));
+    if (!trimmedText) return;
+
+    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, text: trimmedText } : todo)));
 
     setEditingId(null);
     setEditingText('');
@@ -68,6 +74,8 @@ function App() {
   };
 
   const handleEditKeyDown = (e, id) => {
+    if (e.nativeEvent.isComposing) return;
+
     if (e.key === 'Enter') {
       handleSaveEdit(id);
     } else if (e.key === 'Escape') {
@@ -134,55 +142,21 @@ function App() {
         <Text as="h2">남은 할 일 {activeCount}개</Text>
 
         <div className="todo-list-frame">
-          {filteredTodos.map((todo) => {
-            const isEditing = editingId === todo.id;
-
-            return (
-              <div key={todo.id} className="todo-card">
-                <div className="todo-card-top">
-                  {isEditing ? (
-                    <div className="edit-input-wrapper">
-                      <Input
-                        value={editingText}
-                        onChange={(e) => setEditingText(e.target.value)}
-                        onKeyDown={(e) => handleEditKeyDown(e, todo.id)}
-                      />
-                    </div>
-                  ) : (
-                    <Checkbox
-                      checked={todo.completed}
-                      onChange={() => handleToggleTodo(todo.id)}
-                      label={todo.text}
-                    />
-                  )}
-                </div>
-
-                <div className="todo-card-buttons">
-                  {isEditing ? (
-                    <>
-                      <Button variant="default" onClick={() => handleSaveEdit(todo.id)}>
-                        저장
-                      </Button>
-
-                      <Button variant="variant2" onClick={handleCancelEdit}>
-                        취소
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button variant="variant2" onClick={() => handleStartEdit(todo)}>
-                        수정
-                      </Button>
-
-                      <Button variant="variant3" onClick={() => handleDeleteTodo(todo.id)}>
-                        삭제
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+          {filteredTodos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              isEditing={editingId === todo.id}
+              editingText={editingText}
+              onEditingTextChange={(e) => setEditingText(e.target.value)}
+              onToggle={handleToggleTodo}
+              onDelete={handleDeleteTodo}
+              onStartEdit={handleStartEdit}
+              onSaveEdit={handleSaveEdit}
+              onCancelEdit={handleCancelEdit}
+              onEditKeyDown={handleEditKeyDown}
+            />
+          ))}
         </div>
       </div>
     </div>
