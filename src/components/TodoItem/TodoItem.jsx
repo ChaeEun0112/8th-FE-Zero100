@@ -25,6 +25,7 @@ function TodoItem({
               onChange={onEditingTextChange}
               onKeyDown={(e) => onEditKeyDown(e, todo.id)}
               aria-label="할 일 수정"
+              placeholder="수정할 할 일을 입력하세요"
             />
           </div>
         ) : (
