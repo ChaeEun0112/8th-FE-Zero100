@@ -40,17 +40,17 @@ function TodoItem({
               저장
             </Button>
 
-            <Button variant="variant2" onClick={onCancelEdit}>
+            <Button variant="secondary" onClick={onCancelEdit}>
               취소
             </Button>
           </>
         ) : (
           <>
-            <Button variant="variant2" onClick={() => onStartEdit(todo)}>
+            <Button variant="secondary" onClick={() => onStartEdit(todo)}>
               수정
             </Button>
 
-            <Button variant="variant3" onClick={() => onDelete(todo.id)}>
+            <Button variant="danger" onClick={() => onDelete(todo.id)}>
               삭제
             </Button>
           </>

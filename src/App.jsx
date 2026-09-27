@@ -116,21 +116,21 @@ function App() {
 
         <div className="button-container">
           <Button
-            variant={filter === 'all' ? 'default' : 'variant2'}
+            variant={filter === 'all' ? 'default' : 'secondary'}
             onClick={() => setFilter('all')}
           >
             전체보기
           </Button>
 
           <Button
-            variant={filter === 'active' ? 'default' : 'variant2'}
+            variant={filter === 'active' ? 'default' : 'secondary'}
             onClick={() => setFilter('active')}
           >
             진행 중
           </Button>
 
           <Button
-            variant={filter === 'completed' ? 'default' : 'variant2'}
+            variant={filter === 'completed' ? 'default' : 'secondary'}
             onClick={() => setFilter('completed')}
           >
             완료됨
