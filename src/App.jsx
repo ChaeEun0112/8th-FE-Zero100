@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Button from './components/Button/Button';
-import Input from './components/Input/Input';
-import Text from './components/Text/Text';
-import TodoItem from './components/TodoItem/TodoItem';
+import TodoPage from './pages/TodoPage';
+import AllPage from './pages/AllPage';
+import CompletedPage from './pages/CompletedPage';
 
 function App() {
   const [todos, setTodos] = useState([
@@ -13,14 +12,9 @@ function App() {
     { id: 3, text: '운동하기', completed: false },
   ]);
 
-  const [inputText, setInputText] = useState('');
-  const [filter, setFilter] = useState('all');
-
-  const [editingId, setEditingId] = useState(null);
-  const [editingText, setEditingText] = useState('');
-
-  const handleAddTodo = () => {
-    const trimmedText = inputText.trim();
+  // Todo 추가
+  const handleAddTodo = (text) => {
+    const trimmedText = text.trim();
 
     if (!trimmedText) return;
 
@@ -31,135 +25,73 @@ function App() {
     };
 
     setTodos([...todos, newTodo]);
-    setInputText('');
   };
 
-  const handleKeyDown = (e) => {
-    if (e.nativeEvent.isComposing) return;
-
-    if (e.key === 'Enter') {
-      handleAddTodo();
-    }
-  };
-
+  // Todo 완료 상태 변경
   const handleToggleTodo = (id) => {
     setTodos(
       todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)),
     );
   };
 
+  // Todo 삭제
   const handleDeleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const handleStartEdit = (todo) => {
-    setEditingId(todo.id);
-    setEditingText(todo.text);
-  };
-
-  const handleSaveEdit = (id) => {
-    const trimmedText = editingText.trim();
+  // Todo 수정
+  const handleEditTodo = (id, text) => {
+    const trimmedText = text.trim();
 
     if (!trimmedText) return;
 
     setTodos(todos.map((todo) => (todo.id === id ? { ...todo, text: trimmedText } : todo)));
-
-    setEditingId(null);
-    setEditingText('');
   };
-
-  const handleCancelEdit = () => {
-    setEditingId(null);
-    setEditingText('');
-  };
-
-  const handleEditKeyDown = (e, id) => {
-    if (e.nativeEvent.isComposing) return;
-
-    if (e.key === 'Enter') {
-      handleSaveEdit(id);
-    } else if (e.key === 'Escape') {
-      handleCancelEdit();
-    }
-  };
-
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
-
-    return true;
-  });
-
-  const activeCount = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className="todo-app">
-      <div className="header-container">
-        <h1 className="logo-title">TodoMatic</h1>
-
-        <div className="input-section">
-          <Text as="h2">할 일을 입력하세요</Text>
-
-          <div className="input-container">
-            <Input
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="새 할 일 추가"
-            />
-
-            <Button variant="default" onClick={handleAddTodo}>
-              추가
-            </Button>
-          </div>
-        </div>
-
-        <div className="button-container">
-          <Button
-            variant={filter === 'all' ? 'default' : 'secondary'}
-            onClick={() => setFilter('all')}
-          >
-            전체보기
-          </Button>
-
-          <Button
-            variant={filter === 'active' ? 'default' : 'secondary'}
-            onClick={() => setFilter('active')}
-          >
-            진행 중
-          </Button>
-
-          <Button
-            variant={filter === 'completed' ? 'default' : 'secondary'}
-            onClick={() => setFilter('completed')}
-          >
-            완료됨
-          </Button>
-        </div>
-      </div>
-
-      <div className="list-container">
-        <Text as="h2">남은 할 일 {activeCount}개</Text>
-
-        <div className="todo-list-frame">
-          {filteredTodos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              isEditing={editingId === todo.id}
-              editingText={editingText}
-              onEditingTextChange={(e) => setEditingText(e.target.value)}
+    <BrowserRouter>
+      <Routes>
+        {/* 진행 중 페이지 */}
+        <Route
+          path="/"
+          element={
+            <TodoPage
+              todos={todos}
+              onAdd={handleAddTodo}
               onToggle={handleToggleTodo}
               onDelete={handleDeleteTodo}
-              onStartEdit={handleStartEdit}
-              onSaveEdit={handleSaveEdit}
-              onCancelEdit={handleCancelEdit}
-              onEditKeyDown={handleEditKeyDown}
+              onEdit={handleEditTodo}
             />
-          ))}
-        </div>
-      </div>
-    </div>
+          }
+        />
+
+        {/* 전체보기 페이지 */}
+        <Route
+          path="/all"
+          element={
+            <AllPage
+              todos={todos}
+              onToggle={handleToggleTodo}
+              onDelete={handleDeleteTodo}
+              onEdit={handleEditTodo}
+            />
+          }
+        />
+
+        {/* 완료 페이지 */}
+        <Route
+          path="/completed"
+          element={
+            <CompletedPage
+              todos={todos}
+              onToggle={handleToggleTodo}
+              onDelete={handleDeleteTodo}
+              onEdit={handleEditTodo}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
