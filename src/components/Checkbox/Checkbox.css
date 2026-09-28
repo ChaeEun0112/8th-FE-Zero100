@@ -67,3 +67,8 @@
 .checkbox:hover .checkbox-box {
   border-color: #4f46e5;
 }
+
+.checkbox input:focus-visible + .checkbox-box {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
