@@ -1,6 +1,7 @@
 import Button from '../Button/Button';
 import Checkbox from '../Checkbox/Checkbox';
 import Input from '../Input/Input';
+import Modal from '../Modal/Modal';
 import './TodoItem.css';
 
 function TodoItem({
@@ -23,7 +24,7 @@ function TodoItem({
             <Input
               value={editingText}
               onChange={onEditingTextChange}
-              onKeyDown={(e) => onEditKeyDown(e, todo.id)}
+              onKeyDown={(event) => onEditKeyDown(event, todo.id)}
               aria-label="할 일 수정"
               placeholder="수정할 할 일을 입력하세요"
             />
@@ -50,9 +51,42 @@ function TodoItem({
               수정
             </Button>
 
-            <Button variant="danger" onClick={() => onDelete(todo.id)}>
-              삭제
-            </Button>
+            <Modal>
+              <Modal.Trigger>
+                <Button variant="danger">삭제</Button>
+              </Modal.Trigger>
+
+              <Modal.Backdrop />
+
+              <Modal.Content>
+                <h2>할 일을 삭제할까요?</h2>
+                <p>삭제한 할 일은 복구할 수 없습니다.</p>
+
+                <div className="modal-actions">
+                  <Modal.Close>
+                    {(closeModal) => (
+                      <Button variant="secondary" onClick={closeModal}>
+                        취소
+                      </Button>
+                    )}
+                  </Modal.Close>
+
+                  <Modal.Close>
+                    {(closeModal) => (
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          onDelete(todo.id);
+                          closeModal();
+                        }}
+                      >
+                        삭제하기
+                      </Button>
+                    )}
+                  </Modal.Close>
+                </div>
+              </Modal.Content>
+            </Modal>
           </>
         )}
       </div>

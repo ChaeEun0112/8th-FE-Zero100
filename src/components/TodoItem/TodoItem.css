@@ -21,5 +21,64 @@
 .todo-card-buttons {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 8px;
+}
+
+/* Modal에서 사용하는 버튼 공통 규격 */
+.todo-delete-trigger,
+.todo-delete-cancel,
+.todo-delete-confirm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 44px;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 목록의 삭제 버튼 */
+.todo-delete-trigger {
+  background-color: #ffffff;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+}
+
+.todo-delete-trigger:hover {
+  background-color: #fef2f2;
+  border-color: #f87171;
+}
+
+/* 모달의 취소 버튼 */
+.todo-delete-cancel {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  color: #555555;
+}
+
+.todo-delete-cancel:hover {
+  background-color: #f9fafb;
+  border-color: #c5c5c5;
+}
+
+/* 모달의 삭제하기 버튼 */
+.todo-delete-confirm {
+  background-color: #ffffff;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+}
+
+.todo-delete-confirm:hover {
+  background-color: #fef2f2;
+  border-color: #f87171;
 }
