@@ -4,108 +4,67 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TodoPage from './pages/TodoPage';
 import AllPage from './pages/AllPage';
 import CompletedPage from './pages/CompletedPage';
+import StatsPage from './pages/StatsPage';
 
 function App() {
   const [todos, setTodos] = useState(() => {
     try {
       const savedTasks = localStorage.getItem('tasks');
       const savedTodos = localStorage.getItem('todos');
-      const savedData = savedTasks ?? savedTodos;
+      const data = savedTasks ?? savedTodos;
 
-      if (savedData === null) {
-        return [];
-      }
+      if (!data) return [];
 
-      const parsedData = JSON.parse(savedData);
-      return Array.isArray(parsedData) ? parsedData : [];
-    } catch (error) {
-      console.error('할 일 목록을 불러오지 못했습니다.', error);
+      const parsed = JSON.parse(data);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
       return [];
     }
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem('tasks', JSON.stringify(todos));
-    } catch (error) {
-      console.error('할 일 목록 저장에 실패했습니다.', error);
-    }
+    localStorage.setItem('tasks', JSON.stringify(todos));
   }, [todos]);
 
-  const handleAddTodo = (text) => {
-    const trimmedText = text.trim();
-
-    if (!trimmedText) return;
-
+  const handleAdd = (text) => {
     const newTodo = {
-      id: Date.now(),
-      text: trimmedText,
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      text,
       completed: false,
     };
 
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setTodos((previous) => [...previous, newTodo]);
   };
 
-  const handleToggleTodo = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)),
+  const handleToggle = (id) => {
+    setTodos((previous) =>
+      previous.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)),
     );
   };
 
-  const handleDeleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  const handleDelete = (id) => {
+    setTodos((previous) => previous.filter((todo) => todo.id !== id));
   };
 
-  const handleEditTodo = (id, text) => {
-    const trimmedText = text.trim();
+  const handleEdit = (id, text) => {
+    setTodos((previous) => previous.map((todo) => (todo.id === id ? { ...todo, text } : todo)));
+  };
 
-    if (!trimmedText) return;
-
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => (todo.id === id ? { ...todo, text: trimmedText } : todo)),
-    );
+  const pageProps = {
+    todos,
+    onAdd: handleAdd,
+    onToggle: handleToggle,
+    onDelete: handleDelete,
+    onEdit: handleEdit,
   };
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <TodoPage
-              todos={todos}
-              onAdd={handleAddTodo}
-              onToggle={handleToggleTodo}
-              onDelete={handleDeleteTodo}
-              onEdit={handleEditTodo}
-            />
-          }
-        />
-
-        <Route
-          path="/all"
-          element={
-            <AllPage
-              todos={todos}
-              onAdd={handleAddTodo}
-              onToggle={handleToggleTodo}
-              onDelete={handleDeleteTodo}
-              onEdit={handleEditTodo}
-            />
-          }
-        />
-
-        <Route
-          path="/completed"
-          element={
-            <CompletedPage
-              todos={todos}
-              onToggle={handleToggleTodo}
-              onDelete={handleDeleteTodo}
-              onEdit={handleEditTodo}
-            />
-          }
-        />
+        <Route path="/" element={<TodoPage {...pageProps} />} />
+        <Route path="/all" element={<AllPage {...pageProps} />} />
+        <Route path="/completed" element={<CompletedPage {...pageProps} />} />
+        <Route path="/stats" element={<StatsPage {...pageProps} />} />
       </Routes>
     </BrowserRouter>
   );
