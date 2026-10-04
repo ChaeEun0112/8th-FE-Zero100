@@ -20,15 +20,20 @@ function TodoItem({
     <div className="todo-card">
       <div className="todo-card-top">
         {isEditing ? (
-          <div className="edit-input-wrapper">
-            <Input
-              value={editingText}
-              onChange={onEditingTextChange}
-              onKeyDown={(event) => onEditKeyDown(event, todo.id)}
-              aria-label="할 일 수정"
-              placeholder="수정할 할 일을 입력하세요"
-            />
-          </div>
+          <>
+            <Checkbox checked={todo.completed} onChange={() => onToggle(todo.id)} />
+
+            <div className="edit-input-wrapper">
+              <Input
+                value={editingText}
+                onChange={onEditingTextChange}
+                onKeyDown={(event) => onEditKeyDown(event, todo.id)}
+                aria-label="할 일 수정"
+                placeholder="수정할 할 일을 입력하세요"
+                autoFocus
+              />
+            </div>
+          </>
         ) : (
           <Checkbox checked={todo.completed} onChange={() => onToggle(todo.id)} label={todo.text} />
         )}
@@ -37,7 +42,7 @@ function TodoItem({
       <div className="todo-card-buttons">
         {isEditing ? (
           <>
-            <Button variant="default" onClick={() => onSaveEdit(todo.id)}>
+            <Button variant="secondary" onClick={() => onSaveEdit(todo.id)}>
               저장
             </Button>
 
@@ -59,8 +64,7 @@ function TodoItem({
               <Modal.Backdrop />
 
               <Modal.Content>
-                <h2>할 일을 삭제할까요?</h2>
-                <p>삭제한 할 일은 복구할 수 없습니다.</p>
+                <h2>할 일을 삭제하시겠습니까?</h2>
 
                 <div className="modal-actions">
                   <Modal.Close>
@@ -80,7 +84,7 @@ function TodoItem({
                           closeModal();
                         }}
                       >
-                        삭제하기
+                        삭제
                       </Button>
                     )}
                   </Modal.Close>
