@@ -5,14 +5,12 @@ import Button from '../components/Button/Button';
 import Input from '../components/Input/Input';
 import Navigation from '../components/Navigation/Navigation';
 import Text from '../components/Text/Text';
-import TodoItem from '../components/TodoItem/TodoItem';
+import TodoList from '../components/TodoList/TodoList';
 
 import '../App.css';
 
 function TodoPage({ todos, onAdd, onToggle, onDelete, onEdit }) {
   const [inputText, setInputText] = useState('');
-  const [editingId, setEditingId] = useState(null);
-  const [editingText, setEditingText] = useState('');
 
   const handleAddTodo = () => {
     const trimmedText = inputText.trim();
@@ -25,35 +23,6 @@ function TodoPage({ todos, onAdd, onToggle, onDelete, onEdit }) {
   const handleKeyDown = (e) => {
     if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter') handleAddTodo();
-  };
-
-  const handleStartEdit = (todo) => {
-    setEditingId(todo.id);
-    setEditingText(todo.text);
-  };
-
-  const handleSaveEdit = (id) => {
-    const trimmedText = editingText.trim();
-    if (!trimmedText) return;
-
-    onEdit(id, trimmedText);
-    setEditingId(null);
-    setEditingText('');
-  };
-
-  const handleCancelEdit = () => {
-    setEditingId(null);
-    setEditingText('');
-  };
-
-  const handleEditKeyDown = (e, id) => {
-    if (e.nativeEvent.isComposing) return;
-
-    if (e.key === 'Enter') {
-      handleSaveEdit(id);
-    } else if (e.key === 'Escape') {
-      handleCancelEdit();
-    }
   };
 
   const activeTodos = todos.filter((todo) => !todo.completed);
@@ -104,27 +73,13 @@ function TodoPage({ todos, onAdd, onToggle, onDelete, onEdit }) {
           남은 할 일 {activeTodos.length}개
         </Text>
 
-        <div className="todo-list-frame">
-          {activeTodos.length === 0 ? (
-            <p className="empty-state">진행 중인 할 일이 없어요.</p>
-          ) : (
-            activeTodos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                isEditing={editingId === todo.id}
-                editingText={editingText}
-                onEditingTextChange={(e) => setEditingText(e.target.value)}
-                onToggle={onToggle}
-                onDelete={onDelete}
-                onStartEdit={handleStartEdit}
-                onSaveEdit={handleSaveEdit}
-                onCancelEdit={handleCancelEdit}
-                onEditKeyDown={handleEditKeyDown}
-              />
-            ))
-          )}
-        </div>
+        <TodoList
+          todos={activeTodos}
+          emptyMessage="진행 중인 할 일이 없어요."
+          onToggle={onToggle}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
       </section>
     </main>
   );
