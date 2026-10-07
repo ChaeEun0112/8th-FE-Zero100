@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Button from '../components/Button/Button';
 import Input from '../components/Input/Input';
@@ -10,8 +10,6 @@ import TodoItem from '../components/TodoItem/TodoItem';
 import '../App.css';
 
 function AllPage({ todos, onAdd, onToggle, onDelete, onEdit }) {
-  const navigate = useNavigate();
-
   const [inputText, setInputText] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
@@ -89,13 +87,13 @@ function AllPage({ todos, onAdd, onToggle, onDelete, onEdit }) {
         </section>
 
         <nav className="button-container" aria-label="할 일 필터">
-          <Button variant="default" onClick={() => navigate('/all')}>
+          <Link to="/all" className="button button-default" aria-current="page">
             전체보기
-          </Button>
+          </Link>
 
-          <Button variant="secondary" onClick={() => navigate('/')}>
+          <Link to="/" className="button button-secondary">
             진행 중
-          </Button>
+          </Link>
         </nav>
       </header>
 
