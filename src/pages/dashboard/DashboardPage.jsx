@@ -15,6 +15,12 @@ function DashboardPage() {
       <Link to={ROUTES.COMPONENT_PREVIEW} className="font-semibold text-[#4f46e5]">
         공통 컴포넌트 미리보기 →
       </Link>
+      <Link to={ROUTES.LOGIN} className="font-semibold text-[#4f46e5]">
+        로그인 페이지 미리보기 →
+      </Link>
+      <Link to={ROUTES.SIGNUP} className="font-semibold text-[#4f46e5]">
+        회원가입 페이지 미리보기 →
+      </Link>
     </main>
   );
 }
