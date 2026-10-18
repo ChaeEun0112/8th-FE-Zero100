@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+
+import { ROUTES } from '../../constants/routes';
+
 import './InquiryTable.css';
 
 const InquiryTable = ({ inquiries = [] }) => {
@@ -28,7 +32,11 @@ const InquiryTable = ({ inquiries = [] }) => {
           {inquiries.map((inquiry) => (
             <tr key={inquiry.id}>
               <td className="inquiry-table__cell">{inquiry.id}</td>
-              <td className="inquiry-table__cell inquiry-table__cell--title">{inquiry.title}</td>
+              <td className="inquiry-table__cell inquiry-table__cell--title">
+                <Link to={`${ROUTES.INQUIRY}/${inquiry.id}`} className="inquiry-table__link">
+                  {inquiry.title}
+                </Link>
+              </td>
               <td className="inquiry-table__cell inquiry-table__cell--date">{inquiry.createdAt}</td>
             </tr>
           ))}
