@@ -1,27 +1,57 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import Footer from '../../components/common/Footer';
+import Header from '../../components/common/Header';
+import Sidebar from '../../components/common/Sidebar';
+import InfoCard from '../../components/dashboard/InfoCard';
 import { ROUTES } from '../../constants/routes';
 
+import './DashboardPage.css';
+
+const SIDEBAR_ITEMS = [
+  { label: '대시보드 홈', to: ROUTES.DASHBOARD },
+  { label: '문의' },
+  { label: '마이페이지' },
+];
+
+const MY_INFO = [
+  { label: '이름', value: '홍길동' },
+  { label: '이메일', value: 'hong@example.com' },
+  { label: '가입일', value: '2024.01.15' },
+];
+
+const INQUIRY_STATUS = [
+  { label: '전체 문의', value: '24건' },
+  { label: '내가 쓴 문의', value: '8건' },
+];
+
 function DashboardPage() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // TODO: 로그인 API 연동 후 토큰 삭제 처리 추가
+    navigate(ROUTES.LOGIN);
+  };
+
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-[520px] flex-col gap-4 px-4 py-10">
-      <h1 className="text-[32px] font-extrabold text-[#111]">Dashboard</h1>
-      <p className="text-sm text-[#767676]">
-        대시보드 화면은 피그마 디자인에 맞춰 구현할 예정입니다.
-      </p>
-      <Link to={ROUTES.TODO} className="font-semibold text-[#4f46e5]">
-        Todo List로 이동 →
-      </Link>
-      <Link to={ROUTES.COMPONENT_PREVIEW} className="font-semibold text-[#4f46e5]">
-        공통 컴포넌트 미리보기 →
-      </Link>
-      <Link to={ROUTES.LOGIN} className="font-semibold text-[#4f46e5]">
-        로그인 페이지 미리보기 →
-      </Link>
-      <Link to={ROUTES.SIGNUP} className="font-semibold text-[#4f46e5]">
-        회원가입 페이지 미리보기 →
-      </Link>
-    </main>
+    <div className="dashboard-page">
+      <Header onAction={handleLogout} />
+
+      <div className="dashboard-body">
+        <Sidebar items={SIDEBAR_ITEMS} activeItem="대시보드 홈" />
+
+        <main className="dashboard-main">
+          <h2 className="dashboard-title">대시보드</h2>
+
+          <div className="dashboard-cards">
+            <InfoCard title="내 정보" rows={MY_INFO} />
+            <InfoCard title="문의 현황" rows={INQUIRY_STATUS} />
+          </div>
+        </main>
+      </div>
+
+      <Footer />
+    </div>
   );
 }
 
