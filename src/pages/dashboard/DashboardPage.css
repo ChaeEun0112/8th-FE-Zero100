@@ -1,30 +1,5 @@
-/* 대시보드 메인 전체 레이아웃 (Figma: #F9FAFB) */
-.dashboard-page {
+.dashboard-content {
   display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  background: #f9fafb;
-  font-family: var(--common-font);
-}
-
-/* 헤더 아래 영역: 사이드바 + 메인 콘텐츠 */
-.dashboard-body {
-  display: flex;
-  min-height: 0;
-  flex: 1;
-}
-
-/* 공통 Sidebar의 고정 높이를 풀고 본문 높이에 맞춰 늘어나게 함 */
-.dashboard-page .common-sidebar {
-  min-height: 0;
-}
-
-.dashboard-main {
-  display: flex;
-  min-width: 0;
-  box-sizing: border-box;
-  padding: 31.99px;
-  flex: 1;
   flex-direction: column;
   gap: 24px;
 }
@@ -49,10 +24,6 @@
 }
 
 @media (max-width: 768px) {
-  .dashboard-main {
-    padding: 16px;
-  }
-
   .dashboard-cards {
     grid-template-columns: minmax(0, 1fr);
   }

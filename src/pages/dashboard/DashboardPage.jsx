@@ -1,18 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-
-import Footer from '../../components/common/Footer';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
+import DashboardLayout from '../../components/dashboard/DashboardLayout';
 import InfoCard from '../../components/dashboard/InfoCard';
-import { ROUTES } from '../../constants/routes';
 
 import './DashboardPage.css';
-
-const SIDEBAR_ITEMS = [
-  { label: '대시보드 홈', to: ROUTES.DASHBOARD },
-  { label: '문의' },
-  { label: '마이페이지' },
-];
 
 const MY_INFO = [
   { label: '이름', value: '홍길동' },
@@ -26,32 +15,17 @@ const INQUIRY_STATUS = [
 ];
 
 function DashboardPage() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // TODO: 로그인 API 연동 후 토큰 삭제 처리 추가
-    navigate(ROUTES.LOGIN);
-  };
-
   return (
-    <div className="dashboard-page">
-      <Header onAction={handleLogout} />
+    <DashboardLayout>
+      <div className="dashboard-content">
+        <h2 className="dashboard-title">대시보드</h2>
 
-      <div className="dashboard-body">
-        <Sidebar items={SIDEBAR_ITEMS} activeItem="대시보드 홈" />
-
-        <main className="dashboard-main">
-          <h2 className="dashboard-title">대시보드</h2>
-
-          <div className="dashboard-cards">
-            <InfoCard title="내 정보" rows={MY_INFO} />
-            <InfoCard title="문의 현황" rows={INQUIRY_STATUS} />
-          </div>
-        </main>
+        <div className="dashboard-cards">
+          <InfoCard title="내 정보" rows={MY_INFO} />
+          <InfoCard title="문의 현황" rows={INQUIRY_STATUS} />
+        </div>
       </div>
-
-      <Footer />
-    </div>
+    </DashboardLayout>
   );
 }
 
