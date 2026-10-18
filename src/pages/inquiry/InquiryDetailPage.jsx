@@ -32,7 +32,7 @@ function InquiryDetailPage() {
   const handleConfirmDelete = () => {
     // TODO: 문의 삭제 API 연동
     setIsDeleteModalOpen(false);
-    navigate(ROUTES.INQUIRY);
+    navigate(ROUTES.INQUIRY, { state: { toast: '문의가 삭제되었습니다.' } });
   };
 
   return (
