@@ -4,6 +4,7 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   INQUIRY: '/inquiries',
   INQUIRY_CREATE: '/inquiries/new',
+  INQUIRY_DETAIL: '/inquiries/:id',
   TODO: '/todolist',
   TODO_ALL: '/todolist/all',
   TODO_COMPLETED: '/todolist/completed',
