@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+
 import Button from '../../components/common/Button';
 import DashboardLayout from '../../components/dashboard/DashboardLayout';
 import InquiryTable from '../../components/inquiry/InquiryTable';
+import { ROUTES } from '../../constants/routes';
 
 import './InquiryPage.css';
 
@@ -13,8 +16,10 @@ const INQUIRIES = [
 ];
 
 function InquiryPage() {
+  const navigate = useNavigate();
+
   const handleCreate = () => {
-    // TODO: 문의 등록 기능 구현
+    navigate(ROUTES.INQUIRY_CREATE);
   };
 
   return (
