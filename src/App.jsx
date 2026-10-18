@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { ROUTES } from './constants/routes';
 import DashboardPage from './pages/dashboard/DashboardPage';
+import InquiryPage from './pages/inquiry/InquiryPage';
 import LoginPage from './pages/login/LoginPage';
 import ComponentPreview from './pages/preview/ComponentPreview';
 import SignupPage from './pages/signup/SignupPage';
@@ -71,6 +72,7 @@ function App() {
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
         <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+        <Route path={ROUTES.INQUIRY} element={<InquiryPage />} />
 
         <Route path={ROUTES.TODO} element={<TodoPage {...pageProps} />} />
         <Route path={ROUTES.TODO_ALL} element={<AllPage {...pageProps} />} />
