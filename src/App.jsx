@@ -7,6 +7,7 @@ import InquiryCreatePage from './pages/inquiry/InquiryCreatePage';
 import InquiryDetailPage from './pages/inquiry/InquiryDetailPage';
 import InquiryPage from './pages/inquiry/InquiryPage';
 import LoginPage from './pages/login/LoginPage';
+import MyPage from './pages/mypage/MyPage';
 import ComponentPreview from './pages/preview/ComponentPreview';
 import SignupPage from './pages/signup/SignupPage';
 import AllPage from './pages/todolist/AllPage';
@@ -77,6 +78,7 @@ function App() {
         <Route path={ROUTES.INQUIRY} element={<InquiryPage />} />
         <Route path={ROUTES.INQUIRY_CREATE} element={<InquiryCreatePage />} />
         <Route path={ROUTES.INQUIRY_DETAIL} element={<InquiryDetailPage />} />
+        <Route path={ROUTES.MYPAGE} element={<MyPage />} />
 
         <Route path={ROUTES.TODO} element={<TodoPage {...pageProps} />} />
         <Route path={ROUTES.TODO_ALL} element={<AllPage {...pageProps} />} />
