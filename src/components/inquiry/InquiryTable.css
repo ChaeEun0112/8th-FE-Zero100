@@ -71,3 +71,18 @@
 .inquiry-table__cell--date {
   color: #4a5565;
 }
+
+/* 제목 링크: 평소에는 일반 글자처럼, 마우스를 올리면 밑줄 */
+.inquiry-table__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.inquiry-table__link:hover {
+  text-decoration: underline;
+}
+
+.inquiry-table__link:focus-visible {
+  outline: 2px solid var(--common-muted);
+  outline-offset: 2px;
+}
