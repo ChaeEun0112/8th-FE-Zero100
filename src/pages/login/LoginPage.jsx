@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import AuthLayout from '../../components/auth/AuthLayout';
+import KakaoLoginButton from '../../components/auth/KakaoLoginButton';
 import Button from '../../components/common/Button';
 import TextInput from '../../components/common/TextInput';
-import KakaoLoginButton from '../../components/auth/KakaoLoginButton';
 import { ROUTES } from '../../constants/routes';
 
 import './LoginPage.css';
@@ -22,46 +23,42 @@ function LoginPage() {
   };
 
   return (
-    <main className="login-page">
-      <section className="login-card">
-        <h1 className="login-title">로그인</h1>
+    <AuthLayout title="로그인" className="login-page">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <TextInput
+          type="email"
+          name="email"
+          aria-label="이메일"
+          placeholder="이메일을 입력하세요"
+          autoComplete="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <TextInput
+          type="password"
+          name="password"
+          aria-label="비밀번호"
+          placeholder="비밀번호를 입력하세요"
+          autoComplete="current-password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <Button type="submit">로그인</Button>
+      </form>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <TextInput
-            type="email"
-            name="email"
-            aria-label="이메일"
-            placeholder="이메일을 입력하세요"
-            autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <TextInput
-            type="password"
-            name="password"
-            aria-label="비밀번호"
-            placeholder="비밀번호를 입력하세요"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <Button type="submit">로그인</Button>
-        </form>
+      <div className="login-divider">
+        <span className="login-divider__text">또는</span>
+      </div>
 
-        <div className="login-divider">
-          <span className="login-divider__text">또는</span>
-        </div>
+      <KakaoLoginButton onClick={handleKakaoLogin} />
 
-        <KakaoLoginButton onClick={handleKakaoLogin} />
-
-        <p className="login-signup">
-          계정이 없으신가요?{' '}
-          <Link to={ROUTES.SIGNUP} className="login-signup__link">
-            회원가입
-          </Link>
-        </p>
-      </section>
-    </main>
+      <p className="login-signup">
+        계정이 없으신가요?{' '}
+        <Link to={ROUTES.SIGNUP} className="login-signup__link">
+          회원가입
+        </Link>
+      </p>
+    </AuthLayout>
   );
 }
 

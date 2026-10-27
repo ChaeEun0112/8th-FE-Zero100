@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import AuthLayout from '../../components/auth/AuthLayout';
 import Button from '../../components/common/Button';
 import TextInput from '../../components/common/TextInput';
 import { ROUTES } from '../../constants/routes';
@@ -47,69 +48,65 @@ function SignupPage() {
   };
 
   return (
-    <main className="signup-page">
-      <section className="signup-card">
-        <h1 className="signup-title">회원가입</h1>
-
-        <form className="signup-form" onSubmit={handleSubmit} noValidate>
-          <div className="common-component common-field">
-            <input
-              id={emailId}
-              type="email"
-              name="email"
-              aria-label="이메일"
-              placeholder="이메일을 입력하세요"
-              autoComplete="email"
-              className="common-input"
-              value={values.email}
-              onChange={handleChange('email')}
-              onBlur={handleBlur('email')}
-              aria-invalid={Boolean(emailError)}
-              aria-describedby={emailError ? emailErrorId : undefined}
-            />
-
-            {emailError && (
-              <span id={emailErrorId} className="common-field__error" role="alert">
-                {emailError}
-              </span>
-            )}
-          </div>
-
-          <TextInput
-            type="password"
-            name="password"
-            aria-label="비밀번호"
-            placeholder="비밀번호를 입력하세요"
-            autoComplete="new-password"
-            value={values.password}
-            onChange={handleChange('password')}
-            onBlur={handleBlur('password')}
-            error={getError('password')}
-            helperText="8자 이상, 영문/숫자/특수문자 포함"
+    <AuthLayout title="회원가입" className="signup-page">
+      <form className="signup-form" onSubmit={handleSubmit} noValidate>
+        <div className="common-component common-field">
+          <input
+            id={emailId}
+            type="email"
+            name="email"
+            aria-label="이메일"
+            placeholder="이메일을 입력하세요"
+            autoComplete="email"
+            className="common-input"
+            value={values.email}
+            onChange={handleChange('email')}
+            onBlur={handleBlur('email')}
+            aria-invalid={Boolean(emailError)}
+            aria-describedby={emailError ? emailErrorId : undefined}
           />
-          <TextInput
-            type="text"
-            name="name"
-            aria-label="이름"
-            placeholder="비밀번호를 입력하세요"
-            autoComplete="name"
-            value={values.name}
-            onChange={handleChange('name')}
-            onBlur={handleBlur('name')}
-            error={getError('name')}
-            helperText="2자 이상 8자 이하"
-          />
-          <Button type="submit">회원가입</Button>
-        </form>
 
-        <p className="signup-login">
-          이미 계정이 있으신가요?{' '}
-          <Link to={ROUTES.LOGIN} className="signup-login__link">
-            로그인
-          </Link>
-        </p>
-      </section>
-    </main>
+          {emailError && (
+            <span id={emailErrorId} className="common-field__error" role="alert">
+              {emailError}
+            </span>
+          )}
+        </div>
+
+        <TextInput
+          type="password"
+          name="password"
+          aria-label="비밀번호"
+          placeholder="비밀번호를 입력하세요"
+          autoComplete="new-password"
+          value={values.password}
+          onChange={handleChange('password')}
+          onBlur={handleBlur('password')}
+          error={getError('password')}
+          helperText="8자 이상, 영문/숫자/특수문자 포함"
+        />
+        <TextInput
+          type="text"
+          name="name"
+          aria-label="이름"
+          placeholder="비밀번호를 입력하세요"
+          autoComplete="name"
+          value={values.name}
+          onChange={handleChange('name')}
+          onBlur={handleBlur('name')}
+          error={getError('name')}
+          helperText="2자 이상 8자 이하"
+        />
+        <Button type="submit">회원가입</Button>
+      </form>
+
+      <p className="signup-login">
+        이미 계정이 있으신가요?{' '}
+        <Link to={ROUTES.LOGIN} className="signup-login__link">
+          로그인
+        </Link>
+      </p>
+    </AuthLayout>
   );
 }
 

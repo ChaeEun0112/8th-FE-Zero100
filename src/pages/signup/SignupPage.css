@@ -1,47 +1,6 @@
-/* 회원가입 페이지 배경 (Figma: #F9FAFB, 카드 가운데 정렬) */
-.signup-page {
-  display: flex;
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: 0 16px;
-  justify-content: center;
-  align-items: center;
-  background: #f9fafb;
-  font-family: var(--common-font);
-}
-
-/* 가운데 카드 컨테이너 */
-.signup-card {
-  display: flex;
-  width: 100%;
-  max-width: 447.999px;
-  box-sizing: border-box;
-  padding: 32.929px 32.929px 32.916px 32.929px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+/* 회원가입 전용: 카드 간격 28px (Figma), 로그인은 공통 기본값 26px */
+.signup-page .auth-card {
   gap: 28px;
-
-  border: 0.935px solid #e5e7eb;
-  border-radius: 10px;
-  background: #fff;
-}
-
-/* 제목 */
-.signup-title {
-  display: flex;
-  margin: 0;
-  justify-content: center;
-  align-items: center;
-  align-self: stretch;
-
-  color: #000;
-  font-family: var(--common-font);
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 32px;
-  text-align: center;
 }
 
 /* 입력창 3개 + 회원가입 버튼 */
